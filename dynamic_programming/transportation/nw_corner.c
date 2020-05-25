@@ -8,7 +8,7 @@ int* nw_corner(int *table, int c_source, int c_dest)
 	used_col = calloc(c_dest, sizeof(int));
 	M = calloc(c_source * c_dest, sizeof(int));
 
-	l_index = (c_source + 1) * c_dest + c_dest;
+	l_index = (c_source + 1) * (c_dest + 1) - 1;
 
 	while(table[l_index] > 0){
 		min = POS_INF;

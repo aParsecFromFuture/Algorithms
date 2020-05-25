@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #define POS_INF 100000
 
-int* nw_corner(int *table, int c_source, int c_dest)
+int* least_cost(int *table, int c_source, int c_dest)
 {
-	int i = 0, j, index, s_index, d_index, l_index, min, min_j, *used_col, *M;
+	int i, j, index, s_index, d_index, l_index, min, min_i, min_j, *used_row, *used_col, *M;
 
+	used_row = calloc(c_source, sizeof(int));
 	used_col = calloc(c_dest, sizeof(int));
 	M = calloc(c_source * c_dest, sizeof(int));
 
@@ -12,16 +13,19 @@ int* nw_corner(int *table, int c_source, int c_dest)
 
 	while(table[l_index] > 0){
 		min = POS_INF;
-		for(j = 0; j < c_dest; j++){
-			index = i * (c_dest + 1) + j;
-			if(!used_col[j] && min > table[index]){
-				min = table[index];
-				min_j = j;
+		for(i = 0; i < c_source; i++){
+			for(j = 0; j < c_dest; j++){
+				index = i * (c_dest + 1) + j;
+				if(!used_row[i] && !used_col[j] && min > table[index]){
+					min = table[index];
+					min_i = i;
+					min_j = j;
+				}
 			}
 		}
 
-		index = i * c_dest + min_j;
-		s_index = i * (c_dest + 1) + c_dest;
+		index = min_i * c_dest + min_j;
+		s_index = min_i * (c_dest + 1) + c_dest;
 		d_index = c_source * (c_dest + 1) + min_j;
 
 		if(table[s_index] < table[d_index]){
@@ -29,7 +33,7 @@ int* nw_corner(int *table, int c_source, int c_dest)
 			table[d_index] -= table[s_index];
 			table[l_index] -= table[s_index];
 			table[s_index] = 0;
-			i++;
+			used_row[min_i] = 1;
 		}else{
 			M[index] = table[d_index];
 			table[s_index] -= table[d_index];
@@ -38,7 +42,7 @@ int* nw_corner(int *table, int c_source, int c_dest)
 			used_col[min_j] = 1;
 		}
 	}
-	free(used_col);
+	free(used_row);free(used_col);
 	return M;
 }
 
@@ -54,3 +58,6 @@ int main(int argc, char **argv)
 
 	int *M = least_cost(table, 5, 7);
 }
+
+
+

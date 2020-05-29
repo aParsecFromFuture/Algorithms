@@ -3,7 +3,7 @@
 
 int levenshtein(const char *s1, const char *s2)
 {
-	int i, j, m = 1, n = 1, d, index, *D;
+	int i, j, m = 1, n = 1, d, offset, index, *D;
 	const char *tmp;
 
 	tmp = s1;
@@ -21,8 +21,9 @@ int levenshtein(const char *s1, const char *s2)
 		D[i] = i;
 
 	for(i = 1; i < m; i++)
+		offset = i * n;
 		for(j = 1; j < n; j++){
-			index = i * n + j;
+			index = offset + j;
 			D[index] = MIN(D[index - 1] + 1, 
 				       D[index - n] + 1, 
 				       D[index - n - 1] + ((s1[i - 1] == s2[j - 1])? 0 : 1));

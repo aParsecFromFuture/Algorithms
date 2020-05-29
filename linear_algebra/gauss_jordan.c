@@ -1,19 +1,17 @@
-#define EPSILON 0.001f
-#define IS_ZERO(x) ((x < EPSILON && x > -EPSILON)? 1 : 0)
-
 void gauss_jordan(float *matrix, int r, int c)
 {
 	int i, j, k, offset_1, offset_2, pivot_j;
 	float div_num;
 	for(i = 0; i < c; i++){
 		offset_1 = i * c;
-		for(j = 0; j < c && IS_ZERO(matrix[offset_1 + j]); j++);
+		for(j = 0; j < c && !matrix[offset_1 + j]; j++);
 		
-		if(!IS_ZERO(matrix[offset_1 + j])){
+		if(matrix[offset_1 + j]){
 			pivot_j = j;	
 			div_num = (1.0f / matrix[offset_1 + pivot_j]);
+			matrix[offset_1 + pivot_j] = 1.0f;
 
-			for(; j < c; j++)
+			for(j = pivot_j + 1; j < c; j++)
 				matrix[offset_1 + j] *= div_num;
 
 			for(k = 0; k < r; k++){
@@ -22,8 +20,9 @@ void gauss_jordan(float *matrix, int r, int c)
 				
 				offset_2 = k * c;
 				div_num = matrix[offset_2 + pivot_j];
+				matrix[offset_2 + pivot_j] = 0.0f;
 
-				for(j = pivot_j; j < c; j++)
+				for(j = pivot_j + 1; j < c; j++)
 					matrix[offset_2 + j] -= div_num * matrix[offset_1 + j];
 			}
 		}

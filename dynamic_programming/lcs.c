@@ -2,7 +2,8 @@
 
 char* LCS(const char *s1, const char *s2)
 {
-	int i, j, l, m = 1, n = 1, index, *D, *H;
+	int i, j, l, m = 1, n = 1, index, offset;
+	short *D, *H;
 	const char *tmp;
 	char *s3;
 
@@ -12,12 +13,13 @@ char* LCS(const char *s1, const char *s2)
 	tmp = s2;
 	while(*(tmp++) != '\0')n++;
 	
-	D = calloc(m * n, sizeof(int));
-	H = calloc(m * n, sizeof(int));
+	D = calloc(m * n, sizeof(short));
+	H = calloc(m * n, sizeof(short));
 
-	for(i = 1; i < m; i++)
+	for(i = 1; i < m; i++){
+		offset = i * n;
 		for(j = 1; j < n; j++){
-			index = i * n + j;
+			index = offset + j;
 			if(s1[i - 1] == s2[j - 1]){
 				D[index] = D[index - n - 1] + 1;
 				H[index] = 0;
@@ -31,6 +33,7 @@ char* LCS(const char *s1, const char *s2)
 				}
 			}
 		}
+	}
 	
 	l = D[m * n - 1];
 	s3 = malloc(sizeof(char) * (l + 1));

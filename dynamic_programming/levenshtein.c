@@ -4,7 +4,7 @@
 int levenshtein(const char *s1, const char *s2)
 {
 	int i, j, m = 1, n = 1, d, index, offset;
-	short *D;
+	unsigned short *D;
 	const char *tmp;
 
 	tmp = s1;
@@ -13,7 +13,7 @@ int levenshtein(const char *s1, const char *s2)
 	tmp = s2;
 	while(*(tmp++) != '\0')n++;
 	
-	D = malloc(sizeof(short) * m * n);
+	D = malloc(sizeof(unsigned short) * m * n);
 
 	for(i = 0; i < m; i++)
 		D[i * n] = i;

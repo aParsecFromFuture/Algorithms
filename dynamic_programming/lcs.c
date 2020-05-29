@@ -3,7 +3,7 @@
 char* LCS(const char *s1, const char *s2)
 {
 	int i, j, l, m = 1, n = 1, index, offset;
-	short *D, *H;
+	unsigned short *D, *H;
 	const char *tmp;
 	char *s3;
 
@@ -13,8 +13,8 @@ char* LCS(const char *s1, const char *s2)
 	tmp = s2;
 	while(*(tmp++) != '\0')n++;
 	
-	D = calloc(m * n, sizeof(short));
-	H = calloc(m * n, sizeof(short));
+	D = calloc(m * n, sizeof(unsigned short));
+	H = calloc(m * n, sizeof(unsigned short));
 
 	for(i = 1; i < m; i++){
 		offset = i * n;

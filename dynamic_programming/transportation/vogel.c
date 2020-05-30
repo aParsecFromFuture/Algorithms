@@ -2,7 +2,7 @@
 
 float* vogel(float *table, int c_source, int c_dest)
 {
-	int i, j, balance, min_i, min_j, supply, demand, offset, tmp;
+	int i, j, min_i, min_j, index, supply, demand, balance, offset, tmp;
 	int *used_row, *used_col;
 	float *M;
 	float penalty, max_penalty, min_1, min_2, pos_inf, neg_inf;
@@ -77,17 +77,18 @@ float* vogel(float *table, int c_source, int c_dest)
 			}
 		}
 
+		index = c_dest * min_i + min_j;
 		supply = min_i * (c_dest + 1) + c_dest;
 		demand = c_source * (c_dest + 1) + min_j;
 
 		if(table[supply] < table[demand]){
-			M[c_dest * min_i + min_j] = table[supply];
+			M[index] = table[supply];
 			table[balance] -= table[supply];
 			table[demand] -= table[supply];
 			table[supply] = 0;
 			used_row[min_i] = 1;
 		}else{
-			M[c_dest * min_i + min_j] = table[demand];
+			M[index] = table[demand];
 			table[balance] -= table[demand];
 			table[supply] -= table[demand];
 			table[demand] = 0;

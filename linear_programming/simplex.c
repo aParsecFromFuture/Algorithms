@@ -1,6 +1,6 @@
 void simplex(float *matrix, int r, int c, int v_c)
 {
-	int i, j, min_i, min_j, k, offset_1, offset_2;
+	int i, j, min_i, min_j, offset_1, offset_2;
 	float tmp, min, pos_inf;
 	
 	pos_inf = 1.0f / 0.0f;

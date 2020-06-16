@@ -2,7 +2,7 @@ void gauss_jordan(float *matrix, int r, int c)
 {
 	int i, j, k, offset_1, offset_2, pivot_j;
 	float tmp;
-	for(i = 0; i < c; i++){
+	for(i = 0; i < r; i++){
 		offset_1 = i * c;
 		for(j = 0; j < c && !matrix[offset_1 + j]; j++);
 		
